@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="GR-INDTECH - quản lý công việc, dự án và năng lực nhân sự ngành xây dựng." />
+  <meta name="theme-color" content="#155EEF" />
+  <title>GR-INDTECH</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#dashboard" aria-label="GR-INDTECH Home">
+        <span class="brand-mark">GR</span><span class="brand-copy"><b>GR-INDTECH</b><small>Project Intelligence</small></span>
+      </a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <p class="nav-label">KHÔNG GIAN LÀM VIỆC</p>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Tổng quan</button>
+        <button class="nav-item" data-view="mytasks"><span>✓</span> Công việc <em>12</em></button>
+        <button class="nav-item" data-view="projects"><span>▦</span> Dự án</button>
+        <button class="nav-item" data-view="calendar"><span>▣</span> Lịch</button>
+        <button class="nav-item" data-view="approvals"><span>◇</span> Phê duyệt <em class="warn">4</em></button>
+        <p class="nav-label">ĐIỀU HÀNH</p>
+        <button class="nav-item" data-view="construction"><span>⌘</span> Vận hành xây dựng <em class="new-badge">Mới</em></button>
+        <button class="nav-item" data-view="resources"><span>♙</span> Nguồn lực</button>
+        <button class="nav-item" data-view="people"><span>◎</span> Nhân sự phòng ban</button>
+        <button class="nav-item" data-view="progressreports"><span>▤</span> Báo cáo tiến độ <em>6</em></button>
+        <button class="nav-item" data-view="competency"><span>⬡</span> Năng lực dự án <em class="new-badge">Mới</em></button>
+        <button class="nav-item" data-view="reports"><span>↗</span> Báo cáo</button>
+        <button class="nav-item" data-view="ai"><span>✦</span> AI Copilot</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="workspace"><span class="workspace-logo">GR</span><div><b>GR-INDTECH</b><small>Enterprise</small></div><span>⌄</span></div>
+        <button class="nav-item"><span>⚙</span> Cài đặt</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="menuBtn" aria-label="Mở menu">☰</button>
+        <div class="search"><span>⌕</span><input id="globalSearch" type="search" placeholder="Tìm công việc, dự án, thành viên..."/><kbd>⌘ K</kbd></div>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" aria-label="Đổi giao diện">◐</button>
+          <button class="icon-btn notification-btn" aria-label="Thông báo">♢<i></i></button>
+          <button class="primary-btn" id="newTaskBtn"><span>＋</span> Tạo công việc</button>
+          <button class="avatar-btn" aria-label="Tài khoản"><span class="avatar avatar-blue">GR</span><span class="account-copy"><b>Quản trị GR</b><small>Tài khoản demo</small></span><span>⌄</span></button>
+        </div>
+      </header>
+
+      <section class="content" id="content" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <dialog id="taskDialog">
+    <form method="dialog" id="taskForm">
+      <div class="modal-head"><div><p class="eyebrow">CÔNG VIỆC MỚI</p><h2>Tạo và giao công việc</h2></div><button type="button" value="cancel" class="icon-btn" data-dialog-close>×</button></div>
+      <label>Tên công việc<input name="title" required placeholder="Ví dụ: Hoàn thiện hồ sơ nghiệm thu" /></label>
+      <div class="form-grid"><label>Dự án<select name="project"><option>ERP Transformation</option><option>Website 2026</option><option>Ứng dụng bán hàng</option></select></label><label>Mức ưu tiên<select name="priority"><option>Cao</option><option>Khẩn cấp</option><option>Trung bình</option><option>Thấp</option></select></label></div>
+      <div class="form-grid"><label>Người thực hiện<select name="assignee"><option>Nhân sự 01</option><option>Nhân sự 02</option><option>Nhân sự 03</option><option>Nhân sự 04</option></select></label><label>Hạn hoàn thành<input type="date" name="due" required /></label></div>
+      <label>Mô tả<textarea name="description" rows="4" placeholder="Mục tiêu, yêu cầu và kết quả mong đợi..."></textarea></label>
+      <div class="modal-actions"><button type="button" value="cancel" class="secondary-btn" data-dialog-close>Hủy</button><button type="submit" value="default" class="primary-btn">Tạo công việc</button></div>
+    </form>
+  </dialog>
+  <dialog id="employeeDialog">
+    <form method="dialog" id="employeeForm">
+      <div class="modal-head"><div><p class="eyebrow">NHÂN SỰ PHÒNG BAN</p><h2>Thêm nhân sự mới</h2></div><button type="button" value="cancel" class="icon-btn" data-dialog-close>×</button></div>
+      <div class="form-grid"><label>Mã nhân viên<input name="code" required placeholder="NV-007" /></label><label>Họ và tên<input name="name" required placeholder="Nhân sự 07" /></label></div>
+      <div class="form-grid"><label>Email<input type="email" name="email" required placeholder="demo07@example.com" /></label><label>Số điện thoại<input name="phone" placeholder="09** *** 007" /></label></div>
+      <div class="form-grid"><label>Chức vụ<input name="position" required placeholder="Chuyên viên" /></label><label>Vai trò<select name="role"><option>Thành viên</option><option>Trưởng nhóm</option><option>Phó phòng</option><option>Trưởng phòng</option></select></label></div>
+      <div class="form-grid"><label>Phòng ban<select name="department"><option>Phòng Chuyển đổi số</option><option>Phòng Kế hoạch</option><option>Phòng Kỹ thuật</option><option>Phòng Tài chính</option></select></label><label>Ngày vào làm<input type="date" name="startDate" required /></label></div>
+      <div class="form-grid"><label>Dự án ban đầu<select name="project"><option>ERP Transformation</option><option>Website 2026</option><option>Ứng dụng bán hàng</option><option>Chưa phân công</option></select></label><label>Khối lượng ban đầu (%)<input type="number" name="workload" min="0" max="100" value="70" /></label></div>
+      <div class="modal-actions"><button type="button" value="cancel" class="secondary-btn" data-dialog-close>Hủy</button><button type="submit" value="default" class="primary-btn">Thêm nhân sự</button></div>
+    </form>
+  </dialog>
+  <dialog id="progressDialog">
+    <form method="dialog" id="progressForm">
+      <div class="modal-head"><div><p class="eyebrow">WORK LOG</p><h2>Cập nhật tiến độ công việc</h2></div><button type="button" value="cancel" class="icon-btn" data-dialog-close>×</button></div>
+      <label>Công việc<select name="task" id="progressTaskSelect"></select></label>
+      <div class="form-grid"><label>Tiến độ mới (%)<input type="number" name="progress" min="0" max="100" required value="70" /></label><label>Số giờ thực hiện<input type="number" name="hours" min="0" step="0.5" required value="2" /></label></div>
+      <label>Nội dung đã thực hiện<textarea name="done" rows="3" required placeholder="Mô tả kết quả đã hoàn thành..."></textarea></label>
+      <div class="form-grid"><label>Khó khăn, vướng mắc<textarea name="blocker" rows="2" placeholder="Vấn đề đang cản trở tiến độ..."></textarea></label><label>Đề xuất hỗ trợ<textarea name="support" rows="2" placeholder="Nguồn lực hoặc quyết định cần hỗ trợ..."></textarea></label></div>
+      <label>Khối lượng còn lại<textarea name="remaining" rows="2" placeholder="Các hạng mục tiếp theo..."></textarea></label>
+      <label>File minh chứng<input type="file" name="evidence" accept=".pdf,.xls,.xlsx,.doc,.docx,image/*,video/*" /></label>
+      <div class="modal-actions"><button type="button" value="cancel" class="secondary-btn" data-dialog-close>Lưu nháp</button><button type="submit" value="default" class="primary-btn">Gửi báo cáo</button></div>
+    </form>
+  </dialog>
+  <dialog id="projectDialog">
+    <form method="dialog" id="projectForm">
+      <div class="modal-head"><div><p class="eyebrow">DANH MỤC DỰ ÁN</p><h2>Thêm dự án mới</h2></div><button type="button" value="cancel" class="icon-btn" data-dialog-close>×</button></div>
+      <div class="form-grid"><label>Mã dự án<input name="code" required placeholder="DA-DEMO-07" /></label><label>Tên dự án<input name="name" required placeholder="Trung tâm công nghiệp mới" /></label></div>
+      <div class="form-grid"><label>Loại công trình<select name="type"><option>Công nghiệp</option><option>Dân dụng</option><option>Hạ tầng</option><option>Hạ tầng kỹ thuật</option><option>Giao thông</option><option>MEP</option><option>Nội thất</option></select></label><label>Chủ đầu tư<input name="investor" required placeholder="Chủ đầu tư" /></label></div>
+      <div class="form-grid"><label>Ngày bắt đầu<input type="date" name="start" required /></label><label>Ngày hoàn thành<input type="date" name="due" required /></label></div>
+      <div class="form-grid"><label>Giá trị dự án (tỷ đồng)<input type="number" name="value" min="0" required value="500" /></label><label>Nhân viên thực hiện<select name="members" id="projectMembers" multiple size="4"></select></label></div>
+      <div class="form-grid"><label>Trưởng dự án<select name="manager"><option>Chuyên gia Demo A</option><option>Chuyên gia Demo B</option><option>Chuyên gia Demo C</option></select></label><label>Trạng thái<select name="status"><option>Đang triển khai</option><option>Lập kế hoạch</option><option>Tạm dừng</option></select></label></div>
+      <div class="modal-actions"><button type="button" value="cancel" class="secondary-btn" data-dialog-close>Hủy</button><button type="submit" value="default" class="primary-btn">Thêm dự án</button></div>
+    </form>
+  </dialog>
+  <dialog id="approvalDialog">
+    <form method="dialog" id="approvalForm">
+      <div class="modal-head"><div><p class="eyebrow">YÊU CẦU PHÊ DUYỆT</p><h2>Thêm yêu cầu công việc</h2></div><button type="button" value="cancel" class="icon-btn" data-dialog-close>×</button></div>
+      <label>Tiêu đề yêu cầu<input name="title" required placeholder="Ví dụ: Phê duyệt hoàn thành công việc" /></label>
+      <div class="form-grid"><label>Công việc<select name="task" id="approvalTaskSelect" required></select></label><label>Loại yêu cầu<select name="type"><option>Phê duyệt công việc</option><option>Phê duyệt nghiệm thu</option><option>Phê duyệt tài liệu</option><option>Phê duyệt chi phí</option></select></label></div>
+      <div class="form-grid"><label>Người gửi<select name="member" id="approvalMemberSelect" required></select></label><label>Giá trị / kết quả<input name="value" placeholder="Công việc, tài liệu hoặc giá trị chi phí" /></label></div>
+      <label>Nội dung yêu cầu<textarea name="description" rows="3" placeholder="Mô tả kết quả và nội dung cần phê duyệt..."></textarea></label>
+      <div class="modal-actions"><button type="button" value="cancel" class="secondary-btn" data-dialog-close>Hủy</button><button type="submit" value="default" class="primary-btn">Gửi yêu cầu</button></div>
+    </form>
+  </dialog>
+  <dialog id="reportDetailDialog">
+    <form method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">CHI TIẾT BÁO CÁO</p><h2>Khối lượng công việc đã thực hiện</h2></div><button type="button" value="cancel" class="icon-btn" data-dialog-close>×</button></div>
+      <div id="reportDetailContent"></div>
+      <div class="modal-actions"><button type="button" value="cancel" class="primary-btn" data-dialog-close>Đóng</button></div>
+    </form>
+  </dialog>
+  <dialog id="orgNodeDialog">
+    <form method="dialog" id="orgNodeForm">
+      <div class="modal-head"><div><p class="eyebrow">SƠ ĐỒ TỔ CHỨC DỰ ÁN</p><h2>Thêm vị trí</h2></div><button type="button" value="cancel" class="icon-btn" data-dialog-close>×</button></div>
+      <input type="hidden" name="nodeId" />
+      <label>Tên chức danh / vị trí<input name="role" required placeholder="Ví dụ: Chỉ huy trưởng công trình" /></label>
+      <div class="form-grid"><label>Khối chức năng<select name="group"><option>Ban chỉ huy</option><option>Kỹ thuật – Chất lượng</option><option>Thi công</option><option>Vật tư</option><option>MEP</option><option>An toàn</option><option>Hành chính – Kế toán</option></select></label><label>Nhân sự đảm nhiệm<select name="employeeCode" id="orgEmployeeSelect"></select></label></div>
+      <label>Báo cáo trực tiếp cho<select name="parentId" id="orgParentSelect"></select></label>
+      <p class="form-hint">Để trống “Báo cáo trực tiếp cho” nếu đây là vị trí cao nhất của dự án.</p>
+      <div class="modal-actions"><button type="button" value="cancel" class="secondary-btn" data-dialog-close>Hủy</button><button type="submit" value="default" class="primary-btn">Lưu vị trí</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
